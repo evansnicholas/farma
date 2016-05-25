@@ -1,51 +1,11 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
   <head>
-    <!-- Bootstrap core CSS -->
-    <link href="assets/bootstrap-3.3.6-dist/css/bootstrap.min.css" rel="stylesheet">
-
-    <link href="assets/custom/app.css" rel="stylesheet">
+    <title>Redux TodoMVC example</title>
   </head>
   <body>
-    <div class="container-fluid">
-      <div class="row">
-        <div class="col-xs-10 col-xs-offset-2">
-          <h4>Click on the map to select your destination:</h4>
-        </div>
-      </div>
-      <div class="row">
-        <div class="col-xs-offset-1 col-xs-9">
-          <div id="map"/>
-        </div>
-      </div>
-      <div class="row">
-        <div class="col-xs-10 col-xs-offset-2">
-          <h4>Extra travel info</h4>
-          <form>
-            <div class="form-group">
-              <label>What is your travel style?</label>
-              <select id="travel-style">
-                <option value="cautious">caution</option>
-                <option value="adventurous">adventurous</option>
-              </select>
-            </div>
-            <div class="form-group">
-              <label>Are you traveling with children?</label>
-              <input type="radio" name="children" value="no" checked> No
-              <input type="radio" name="children" value="yes"> Yes
-            </div>
-          </form>
-        </div>
-      </div>
-      <div class="row">
-        <div class="col-xs-10 col-xs-offset-2" id="meds-div">
-          <h4>Medication</h4>
-          <div id="meds"/>
-        </div>
-      </div>
+    <div class="todoapp" id="root">
     </div>
+    <script src="/static/bundle.js"></script>
   </body>
-  <script src="assets/js/jquery-2.2.3.min.js"></script>
-  <script src="assets/js/script.js"></script>
-  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDz-fA7ScCf27wZdfSh6qTpaObP-A9_WTU&callback=initMap" async defer></script>
 </html>
