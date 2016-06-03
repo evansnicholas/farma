@@ -1,7 +1,7 @@
 const initialState = {
-  countries: []
+  countries: ["UK", "Netherlands", "France"]
 }
 
-function countries(state = initialState, action) {
-  return state
+export function countries(state = initialState, action) {
+  return state;
 }
