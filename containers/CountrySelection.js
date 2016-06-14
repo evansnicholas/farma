@@ -1,6 +1,6 @@
 import { connect } from "react-redux";
 import CountrySelector from "../components/CountrySelector";
-import {addCountry} from "../actions"
+import {addCountry, removeCountry} from "../actions";
 
 const mapStateToProps = (state) => {
   return state.countries;
@@ -8,8 +8,11 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    onMapClick: (country) => {
+    onAddCountry: (country) => {
       dispatch(addCountry(country))
+    },
+    onRemoveCountry: (country) => {
+      dispatch(removeCountry(country))
     }
   }
 }
@@ -17,6 +20,6 @@ const mapDispatchToProps = (dispatch) => {
 const CountrySelection = connect(
   mapStateToProps,
   mapDispatchToProps
-)(CountrySelector)
+)(CountrySelector);
 
 export default CountrySelection;

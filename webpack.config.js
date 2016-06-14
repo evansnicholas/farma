@@ -28,6 +28,10 @@ module.exports = {
         test: /\.css?$/,
         loaders: [ 'style', 'raw' ],
         include: __dirname
+      },
+      {
+        test: /\.js$/,
+        loader: "imports?google=>window.google"
       }
     ]
   }
