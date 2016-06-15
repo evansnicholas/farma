@@ -1,0 +1,28 @@
+@import '../assets/bootstrap-3.3.6-dist/css/bootstrap.css';
+
+.map {
+  height: 100%;
+}
+
+.map-container {
+  height:100vh;
+}
+
+.countries {
+
+}
+
+.next {
+  padding-top: 10px;
+  padding-bottom: 10px;
+  border-bottom-style: solid;
+  border-bottom-width: thin;
+}
+
+#select-text {
+  padding-top: 40vh;
+}
+
+.selected-country > p:hover {
+  background-color: #ff6666;
+}

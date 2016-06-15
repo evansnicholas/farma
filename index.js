@@ -12,7 +12,7 @@ import DeliveryConfirmation from "./containers/DeliveryConfirmation";
 import configureStore from "./store/configureStore";
 import { Router, Route, browserHistory, IndexRedirect } from "react-router";
 import "./farma-css/index.css";
-import "./assets/bootstrap-3.3.6-dist/css/bootstrap.min.css";
+//import "./assets/bootstrap-3.3.6-dist/css/bootstrap.css";
 
 const store = configureStore()
 

@@ -3,7 +3,7 @@ import React from 'react';
 export class App extends React.Component {
   render() {
     return (
-      <div className="container-fluid app">
+      <div>
         {this.props.children}
       </div>
     );

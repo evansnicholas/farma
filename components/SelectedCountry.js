@@ -5,9 +5,9 @@ const SelectedCountry = ({
   onRemoveCountry
 }) => (
   <div className="selected-country">
-    <p>{country}
-      <span onClick={() => onRemoveCountry(country)}
-          className="glyphicon-remove"></span>
+    <p onClick={() => onRemoveCountry(country)}
+       className="text-center">
+       {country}
     </p>
   </div>
 );
