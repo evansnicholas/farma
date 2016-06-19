@@ -2,13 +2,14 @@ import React from "react";
 import {Link} from "react-router";
 import CountryDetails from "./CountryDetails";
 
-const TravelDetailsUpdator = ({countries}) => (
+const TravelDetailsUpdator = ({countries, onUpdateCountryTravelDetails}) => (
   <div className="container">
     {countries.map((c, index) => {
       return (
         <div key={c.country + index} className="row">
           <div className="col-xs-12">
-            <CountryDetails country={c.country} />
+            <CountryDetails countryDetails={c}
+                onUpdateCountryTravelDetails={onUpdateCountryTravelDetails} />
           </div>
         </div>
       );
