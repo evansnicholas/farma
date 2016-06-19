@@ -62,10 +62,10 @@ class CountrySelector extends React.Component {
         this.renderCountries() : this.renderNoCountries();
 
     return (
-      <div className="container-fluid app">
+      <div className="container-fluid">
         <div className="row">
           <div className="col-md-8 map-container">
-            <Map onAddCountry={this.props.onAddCountry} />
+            <Map onSelectCountry={this.props.onSelectCountry} />
           </div>
           <div className="col-md-4 countries">
             {countries}

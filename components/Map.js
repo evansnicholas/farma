@@ -18,12 +18,10 @@ export default class Map extends React.Component {
       zoom: 2
     });
 
-    const onAddCountry = this.props.onAddCountry;
+    const onSelectCountry = this.props.onSelectCountry;
 
     this.map.addListener('click', function(event) {
-      const lat = event.latLng.lat();
-      const lng = event.latLng.lng();
-      onAddCountry("UK");
+      onSelectCountry(event.latLng);
     });
   }
 

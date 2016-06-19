@@ -23,6 +23,10 @@
   padding-top: 40vh;
 }
 
+.country-details-select {
+  margin-left: 10px;
+}
+
 .selected-country > p:hover {
   background-color: #ff6666;
 }
