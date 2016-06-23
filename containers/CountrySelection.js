@@ -3,7 +3,7 @@ import CountrySelector from "../components/CountrySelector";
 import {fetchCountry, removeCountry} from "../actions";
 
 const mapStateToProps = (state) => {
-  return state.countries;
+  return { countries: state.countries };
 }
 
 const mapDispatchToProps = (dispatch) => {

@@ -38,17 +38,18 @@ export function countries(state = initialState, action) {
     case types.ADD_COUNTRY: {
       const newCountry = initializeCountry(action.country);
       const newCountries = state.countries.concat([newCountry]);
-      return {
+      const newState = Object.assign({}, state, {
         countries: newCountries
-      };
+      });
+      return newState;
     }
     case types.REMOVE_COUNTRY: {
       const updatedCountries = state.countries.filter(c => {
         return c.country !== action.country;
       });
-      return {
+      return Object.assign({}, state, {
         countries: updatedCountries
-      };
+      });
     }
     case types.UPDATE_TRAVEL_DETAILS: {
      const updatedCountries = state.countries.map(c => {
@@ -66,6 +67,9 @@ export function countries(state = initialState, action) {
        }
      });
      return Object.assign({}, state, {countries: updatedCountries});
+    }
+    case types.UPDATE_PRODUCTS: {
+      return Object.assign({}, state, {products: action.products})
     }
     default: return state;
   }

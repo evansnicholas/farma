@@ -1,15 +1,24 @@
 import { connect } from "react-redux";
 import ProductSelector from "../components/ProductSelector";
-import { updateProductSelectionState } from "../actions";
+import {
+  updateProductSelectionState,
+  fetchProducts
+} from "../actions";
 
 const mapStateToProps = (state) => {
-  return state.products;
+  return {
+    countries: state.countries,
+    products: state.products
+  };
 }
 
 const mapDispatchToProps = (dispatch) => {
   return {
     onToggleProductSelectionState: (productID) => {
       dispatch(updateProductSelectionState(productID))
+    },
+    fetchProducts: (countries) => {
+      dispatch(fetchProducts(countries))
     }
   }
 }

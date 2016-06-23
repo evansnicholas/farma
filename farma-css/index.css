@@ -30,3 +30,33 @@
 .selected-country > p:hover {
   background-color: #ff6666;
 }
+
+#packages-choice {
+  padding-top: 20px;
+  padding-bottom: 20px;
+}
+
+#package-tabs {
+  padding-top: 20px;
+  padding-bottom: 20px;
+}
+
+.package {
+  border-bottom-style: solid;
+  border-bottom-width: thin;
+  border-color: lightgrey;
+}
+
+.package:hover {
+  color: white;
+  background-color: lightgray;
+  cursor: pointer;
+}
+
+.selected-package {
+  border-style: solid;
+  border-bottom-style: none;
+  border-width: thin;
+  border-color: lightgray;
+
+}

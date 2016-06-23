@@ -1,11 +1,11 @@
 import { createStore, applyMiddleware } from "redux";
-import rootReducer from "../reducers";
+//import rootReducer from "../reducers";
+import {countries} from "../reducers/farma";
 import thunkMiddleware from "redux-thunk";
 
 export default function configureStore(initialState = {}) {
   const store = createStore(
-    rootReducer,
-    initialState,
+    countries,
     applyMiddleware(
       thunkMiddleware
     )

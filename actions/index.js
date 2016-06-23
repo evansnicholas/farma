@@ -1,7 +1,22 @@
 import * as types from "../constants/ActionTypes";
 import {extractCountry} from "../utils/FarmaUtils";
+import firebase from "firebase";
 
 const GOOGLE_API_KEY = "AIzaSyDz-fA7ScCf27wZdfSh6qTpaObP-A9_WTU";
+const app = firebase.initializeApp({
+    apiKey: "AIzaSyCRvApjs46GDA12LuHmLBF1LRore1BWo4k",
+    authDomain: "farma-a2488.firebaseapp.com",
+    databaseURL: "https://farma-a2488.firebaseio.com",
+    storageBucket: "farma-a2488.appspot.com",
+});
+
+// Sign in the user anonymously for now.
+firebase.auth().signInAnonymously().catch(function(error) {
+  // Handle Errors here.
+  var errorCode = error.code;
+  var errorMessage = error.message;
+  console.error(`Anonymous login failed: ${errorMessage}`);
+});
 
 export function addCountry(country) {
   return { type: types.ADD_COUNTRY, country: country };
@@ -36,6 +51,21 @@ export function fetchCountry(latLng) {
       .then(json => {
         const country = extractCountry(json.results);
         return dispatch(addCountry(country));
+      });
+  }
+}
+
+export function updateProducts(products) {
+  return { type: types.UPDATE_PRODUCTS, products };
+}
+
+export function fetchProducts(countries) {
+  const country = countries[0].country.toLowerCase();
+  return function(dispatch) {
+    return firebase.database().ref(`/countries/${country}`)
+      .once("value")
+      .then(snapshot => {
+        return dispatch(updateProducts([snapshot.val().products]));
       });
   }
 }

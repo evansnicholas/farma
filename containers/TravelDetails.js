@@ -3,7 +3,7 @@ import TravelDetailsUpdator from "../components/TravelDetailsUpdator";
 import { updateCountryTravelDetails } from "../actions";
 
 const mapStateToProps = (state) => {
-  return state.countries;
+  return { countries: state.countries };
 }
 
 const mapDispatchToProps = (dispatch) => {
