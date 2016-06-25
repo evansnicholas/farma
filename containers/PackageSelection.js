@@ -1,14 +1,13 @@
 import { connect } from "react-redux";
-import ProductSelector from "../components/ProductSelector";
+import PackageSelector from "../components/PackageSelector";
 import {
   updateProductSelectionState,
-  fetchProducts
+  fetchPackages
 } from "../actions";
 
 const mapStateToProps = (state) => {
   return {
-    countries: state.countries,
-    products: state.products
+    packages: state.packages
   };
 }
 
@@ -17,15 +16,15 @@ const mapDispatchToProps = (dispatch) => {
     onToggleProductSelectionState: (productID) => {
       dispatch(updateProductSelectionState(productID))
     },
-    fetchProducts: (countries) => {
-      dispatch(fetchProducts(countries))
+    fetchPackages: () => {
+      dispatch(fetchPackages())
     }
   }
 }
 
-const ProductSelection = connect(
+const PackageSelection = connect(
   mapStateToProps,
   mapDispatchToProps
-)(ProductSelector);
+)(PackageSelector);
 
-export default ProductSelection;
+export default PackageSelection;

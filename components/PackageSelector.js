@@ -2,9 +2,9 @@ import React from "react";
 import SelectedProduct from "./SelectedProduct";
 import {Link} from "react-router";
 
-export default class ProductSelector extends React.Component {
+export default class PackageSelector extends React.Component {
   getDisplayName() {
-    return "ProductSelector";
+    return "PackageSelector";
   }
 
   constructor(props) {
@@ -12,7 +12,7 @@ export default class ProductSelector extends React.Component {
   }
 
   componentDidMount() {
-    this.props.fetchProducts(this.props.countries);
+    this.props.fetchPackages();
   }
 
   render() {
@@ -60,4 +60,4 @@ export default class ProductSelector extends React.Component {
   }
 }
 
-export default ProductSelector;
+export default PackageSelector;

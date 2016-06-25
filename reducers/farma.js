@@ -11,15 +11,9 @@ const initializeCountry = (country) => ({
   }
 });
 
-const initializeProduct = (productID, productName) => ({
-  productID: productID,
-  productName: productName,
-  selected: true
-});
-
 const initialState = {
   countries: [],
-  products: [],
+  packages: [],
   deliveryDetails: {
     email: null,
     firstName: null,
@@ -33,7 +27,7 @@ const initialState = {
   orderNumber: null
 }
 
-export function countries(state = initialState, action) {
+export function app(state = initialState, action) {
   switch(action.type) {
     case types.ADD_COUNTRY: {
       const newCountry = initializeCountry(action.country);

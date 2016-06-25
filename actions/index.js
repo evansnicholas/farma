@@ -1,5 +1,5 @@
 import * as types from "../constants/ActionTypes";
-import {extractCountry} from "../utils/FarmaUtils";
+import {extractCountry, computePackages} from "../utils/FarmaUtils";
 import firebase from "firebase";
 
 const GOOGLE_API_KEY = "AIzaSyDz-fA7ScCf27wZdfSh6qTpaObP-A9_WTU";
@@ -55,17 +55,28 @@ export function fetchCountry(latLng) {
   }
 }
 
-export function updateProducts(products) {
-  return { type: types.UPDATE_PRODUCTS, products };
+export function updatePackages(packages) {
+  return { type: types.UPDATE_PACKAGES, packages };
 }
 
-export function fetchProducts(countries) {
-  const country = countries[0].country.toLowerCase();
-  return function(dispatch) {
-    return firebase.database().ref(`/countries/${country}`)
+export function fetchPackages(countries) {
+  const countryPromises = countries.map(c => {
+    const country = c.country.toLowerCase();
+    return firebase.database()
+      .ref(`/countries/${country}`)
       .once("value")
-      .then(snapshot => {
-        return dispatch(updateProducts([snapshot.val().products]));
+  });
+
+  const productsPromise = firebase.database()
+    .ref("/products").once("value");
+
+  return function(dispatch) {
+    return
+      Promise.all([...countryPromises, productsPromise]).then(snapshots => {
+        const values = snapshots.map(s => s.val());
+        const products = values.pop();
+        const packages = computePackages(values, products);
+        return dispatch(updatePackages(packages));
       });
   }
 }
