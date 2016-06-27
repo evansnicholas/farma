@@ -7,7 +7,8 @@ import {
 
 const mapStateToProps = (state) => {
   return {
-    packages: state.packages
+    packages: state.packages,
+    countries: state.countries
   };
 }
 
@@ -16,8 +17,8 @@ const mapDispatchToProps = (dispatch) => {
     onToggleProductSelectionState: (productID) => {
       dispatch(updateProductSelectionState(productID))
     },
-    fetchPackages: () => {
-      dispatch(fetchPackages())
+    fetchPackages: (countries) => {
+      dispatch(fetchPackages(countries))
     }
   }
 }

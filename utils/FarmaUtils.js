@@ -29,15 +29,15 @@ function updateSelectedProducts(currProducts,
     const existingProd = currProducts.get(newProdId, null);
     const countryPackageType = getProductPackageType(newProd);
     if (existingProd === null) {
-      const productDescr = productDescriptions[prodId];
+      const productDescr = productDescriptions[newProdId];
       productDescr.packageType = countryPackageType;
-      return currProducts.set(prodId, productDescr);
+      return currProducts.set(newProdId, productDescr);
     } else {
       const currPackageType = existingProd.packageType;
       const updatedPackageType =
         inferProductPackageType(currPackageType, countryPackageType);
-      const updatedProduct = existingProd.packageType = updatedPackageType;
-      return currProducts.set(prodId, updatedProduct);
+      existingProd.packageType = updatedPackageType;
+      return currProducts.set(newProdId, existingProd);
     }
   }
 
@@ -53,15 +53,15 @@ export function computePackages(countries, productDescriptions) {
   const selectedProducts = countries.reduce((acc, country) => {
     const products = Object.keys(country.products);
     return products.reduce((innerAcc, prodId) => {
-      return updatedSelectedProducts(innerAcc,
-        productDescriptions, prodId, products[prodId]);
+      return updateSelectedProducts(innerAcc,
+        productDescriptions, prodId, country.products[prodId]);
     }, acc)
   }, selectedProductsInit);
 
   const packagesByType = selectedProducts.reduce((acc, prod) => {
     const prodPackageType = prod.packageType;
-    const package = acc.get(prodPackageType);
-    const updatedPackage = package.push(prod);
+    const currPackage = acc.get(prodPackageType);
+    const updatedPackage = currPackage.push(prod);
     return acc.set(prodPackageType, updatedPackage);
   }, packagesByTypeInit);
 

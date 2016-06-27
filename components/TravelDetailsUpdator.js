@@ -1,6 +1,7 @@
 import React from "react";
 import {Link} from "react-router";
 import CountryDetails from "./CountryDetails";
+import * as packageTypes from "../constants/PackageTypes";
 
 const TravelDetailsUpdator = ({countries, onUpdateCountryTravelDetails}) => (
   <div className="container">
@@ -16,7 +17,7 @@ const TravelDetailsUpdator = ({countries, onUpdateCountryTravelDetails}) => (
     })}
     <div className="row">
       <div className="col-xs-12">
-        <Link to="/productSelection">
+        <Link to={`/packageSelection/${packageTypes.BASIC}`}>
           <p className="next text-right">Next
             <span className="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
           </p>

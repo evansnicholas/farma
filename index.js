@@ -5,7 +5,7 @@ import { Provider } from "react-redux";
 import App from "./components/App";
 import CountrySelection from "./containers/CountrySelection";
 import TravelDetails from "./containers/TravelDetails";
-import ProductSelection from "./containers/ProductSelection";
+import PackageSelection from "./containers/PackageSelection";
 import OrderSummary from "./containers/OrderSummary";
 import DeliveryDetails from "./containers/DeliveryDetails";
 import DeliveryConfirmation from "./containers/DeliveryConfirmation";
@@ -23,7 +23,7 @@ render(
         <IndexRedirect to="/countrySelection" />
         <Route path="countrySelection" component={CountrySelection} />
         <Route path="travelDetails" component={TravelDetails} />
-        <Route path="productSelection" component={ProductSelection} />
+        <Route path="packageSelection/:packageType" component={PackageSelection} />
         <Route path="orderSummary" component={OrderSummary} />
         <Route path="deliveryDetails" component={DeliveryDetails} />
         <Route path="deliveryConfirmation" component={DeliveryConfirmation} />

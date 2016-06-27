@@ -64,19 +64,20 @@ export function fetchPackages(countries) {
     const country = c.country.toLowerCase();
     return firebase.database()
       .ref(`/countries/${country}`)
-      .once("value")
+      .once("value");
   });
 
   const productsPromise = firebase.database()
     .ref("/products").once("value");
 
   return function(dispatch) {
-    return
-      Promise.all([...countryPromises, productsPromise]).then(snapshots => {
+      return Promise.all([...countryPromises, productsPromise]).then(snapshots => {
         const values = snapshots.map(s => s.val());
         const products = values.pop();
         const packages = computePackages(values, products);
         return dispatch(updatePackages(packages));
+      }).catch(err => {
+        console.log(`Getting packages failed: ${err}`);
       });
   }
 }

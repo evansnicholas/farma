@@ -13,7 +13,7 @@ const initializeCountry = (country) => ({
 
 const initialState = {
   countries: [],
-  packages: [],
+  packages: null,
   deliveryDetails: {
     email: null,
     firstName: null,
@@ -62,8 +62,8 @@ export function app(state = initialState, action) {
      });
      return Object.assign({}, state, {countries: updatedCountries});
     }
-    case types.UPDATE_PRODUCTS: {
-      return Object.assign({}, state, {products: action.products})
+    case types.UPDATE_PACKAGES: {
+      return Object.assign({}, state, {packages: action.packages})
     }
     default: return state;
   }
