@@ -38,7 +38,11 @@
 
 #package-tabs {
   padding-top: 20px;
-  padding-bottom: 20px;
+}
+
+#package-tabs > a {
+  color: inherit;
+  text-decoration: inherit;
 }
 
 .package {
@@ -58,5 +62,12 @@
   border-bottom-style: none;
   border-width: thin;
   border-color: lightgray;
+}
 
+.package-info {
+  border-style: solid;
+  border-width: thin;
+  border-color: lightgray;
+  border-top-style: none;
+  padding-top: 20px;
 }

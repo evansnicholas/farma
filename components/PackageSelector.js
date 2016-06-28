@@ -2,6 +2,7 @@ import React from "react";
 import SelectedProduct from "./SelectedProduct";
 import * as packageTypes from "../constants/PackageTypes";
 import {Link} from "react-router";
+import {findAllRelevantPackageTypes} from "../utils/FarmaUtils";
 
 export default class PackageSelector extends React.Component {
   getDisplayName() {
@@ -12,7 +13,7 @@ export default class PackageSelector extends React.Component {
     super(props);
     this.renderPackages = this.renderPackages.bind(this);
     this.getViewedPackage = this.getViewedPackage.bind(this);
-    this.getViewedPackage = this.getViewedPackage.bind(this);
+    this.getPackageClass = this.getPackageClass.bind(this);
   }
 
   componentDidMount() {
@@ -23,7 +24,11 @@ export default class PackageSelector extends React.Component {
     if (this.props.packages === null) {
       return <p>{"Computing packages"}</p>
     } else {
-      const products = this.props.packages.get(Number(this.getViewedPackage()));
+      const relevantPackageTypes =
+        findAllRelevantPackageTypes(this.getViewedPackage());
+      const products = relevantPackageTypes.map(pt => {
+        return this.props.packages.get(pt);
+      }).flatten();
       return products.map((p, idx) => {
         return <div key={`product${idx}`}><p>{p.name}</p></div>
       });
@@ -31,7 +36,7 @@ export default class PackageSelector extends React.Component {
   }
 
   getViewedPackage() {
-    return this.props.routeParams.packageType;
+    return Number(this.props.routeParams.packageType);
   }
 
   getPackageClass(packageType) {
@@ -53,37 +58,27 @@ export default class PackageSelector extends React.Component {
         <div className="row">
           <div className="col-xs-9 col-xs-offset-1">
             <div id="package-tabs" className="row">
-              <div className={`col-xs-4 ${basicClass}`}>
-                <Link to={`/packageSelection/${packageTypes.BASIC}`}>
+              <Link to={`/packageSelection/${packageTypes.BASIC}`}>
+                <div className={`col-xs-4 ${basicClass}`}>
                   <h2>{"Basic"}</h2>
-                </Link>
-              </div>
-              <div className={`col-xs-4 ${plusClass}`}>
-                <Link to={`/packageSelection/${packageTypes.PLUS}`}>
+                </div>
+              </Link>
+              <Link to={`/packageSelection/${packageTypes.PLUS}`}>
+                <div className={`col-xs-4 ${plusClass}`}>
                   <h2>{"Extra"}</h2>
-                </Link>
-              </div>
-              <div className={`col-xs-4 ${excellentClass}`}>
-                <Link to={`/packageSelection/${packageTypes.EXCELLENT}`}>
+                </div>
+              </Link>
+              <Link to={`/packageSelection/${packageTypes.EXCELLENT}`}>
+                <div className={`col-xs-4 ${excellentClass}`}>
                   <h2>{"VIP"}</h2>
-                </Link>
-              </div>
+                </div>
+              </Link>
             </div>
             <div className="row">
-              <div className="col-xs-12">
-                <p>{"This package will cover your basic needs."}</p>
+              <div className="col-xs-12 package-info">
                 {this.renderPackages()}
               </div>
             </div>
-          </div>
-        </div>
-        <div className="row">
-          <div className="col-xs-12">
-            <Link to="/orderSummary">
-              <p className="next text-right">Next
-                <span className="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
-              </p>
-            </Link>
           </div>
         </div>
       </div>

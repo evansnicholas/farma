@@ -67,3 +67,11 @@ export function computePackages(countries, productDescriptions) {
 
   return packagesByType;
 }
+
+export function findAllRelevantPackageTypes(packageType) {
+  return (
+    immutable.List(packageTypes.ALL_PACKAGE_TYPES.filter(pt =>
+      pt <= packageType)
+    )
+  );
+}
