@@ -4,9 +4,8 @@ import * as details from "../constants/TravelDetails";
 const initializeCountry = (country) => ({
   country: country,
   details: {
-    company: details.ALONE,
-    adventurous: "false",
-    luxurious: "false",
+    adults: 1,
+    children: 0,
     period: 1
   }
 });

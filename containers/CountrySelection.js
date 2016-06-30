@@ -1,6 +1,10 @@
 import { connect } from "react-redux";
 import CountrySelector from "../components/CountrySelector";
-import {fetchCountry, removeCountry} from "../actions";
+import {
+  fetchCountry,
+  removeCountry,
+  updateCountryTravelDetails
+} from "../actions";
 
 const mapStateToProps = (state) => {
   return { countries: state.countries };
@@ -13,6 +17,9 @@ const mapDispatchToProps = (dispatch) => {
     },
     onRemoveCountry: (country) => {
       dispatch(removeCountry(country))
+    },
+    onUpdateCountryTravelDetails: (details) => {
+      dispatch(updateCountryTravelDetails(details))
     }
   }
 }

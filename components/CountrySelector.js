@@ -2,6 +2,7 @@ import React from "react";
 import SelectedCountry from "./SelectedCountry";
 import {Link} from "react-router";
 import Map from "./Map";
+import * as packageTypes from "../constants/PackageTypes";
 
 class CountrySelector extends React.Component {
 
@@ -34,8 +35,8 @@ class CountrySelector extends React.Component {
       <div>
         <div className="row">
           <div className="col-xs-12">
-            <Link to="/travelDetails">
-              <p className="next text-center">Next
+            <Link to={`/packageSelection/${packageTypes.BASIC}`}>
+              <p className="next text-center">Get products
                 <span className="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
               </p>
             </Link>
@@ -45,8 +46,9 @@ class CountrySelector extends React.Component {
           <div className="col-xs-12">
             {this.props.countries.map((c, index) => {
               return (
-                <SelectedCountry country={c.country}
+                <SelectedCountry country={c}
                    onRemoveCountry={this.props.onRemoveCountry}
+                   onUpdateCountryTravelDetails={this.props.onUpdateCountryTravelDetails}
                    key={c + index}/>
               );
             })}

@@ -1,10 +1,9 @@
-var path = require('path')
-var webpack = require('webpack')
+var path = require('path');
+var webpack = require('webpack');
+var ExtractTextPlugin = require("extract-text-webpack-plugin");
 
 module.exports = {
-  devtool: 'cheap-module-eval-source-map',
   entry: [
-    'webpack-hot-middleware/client',
     './index'
   ],
   output: {
@@ -13,7 +12,9 @@ module.exports = {
   },
   plugins: [
     new webpack.optimize.OccurenceOrderPlugin(),
-    new webpack.HotModuleReplacementPlugin()
+    new ExtractTextPlugin("style.css", {
+            allChunks: true
+        })
   ],
   module: {
     loaders: [
@@ -24,17 +25,16 @@ module.exports = {
         include: __dirname
       },
       {
-        test: /\.css?$/,
-        loaders: [ 'style', 'raw' ],
-        include: __dirname
-      },
-      {
-        test: /\.js$/,
+        test: /\Map.js$/,
         loader: "imports?google=>window.google"
       },
       {
+        test: /\.css$/,
+        loader: ExtractTextPlugin.extract("style-loader", "css-loader")
+      },
+      {
         test: /\.less$/,
-        loader: "style!css!less"
+        loader: ExtractTextPlugin.extract("style-loader", "css-loader!less-loader")
       },
       {
         test: /\.(eot|svg|ttf|woff|woff2)$/,
