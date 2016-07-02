@@ -53,6 +53,16 @@ export default class PackageSelector extends React.Component {
     return (
       <div className="container" id="packages-choice">
         <div className="row">
+          <Link to={`/countrySelection`}>
+            <div className="col-xs-2 next">
+              <p className="text-left">
+                <span className="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+                {"Adjust Countries"}
+              </p>
+            </div>
+          </Link>
+        </div>
+        <div className="row">
           <h1>{"Choose your package:"}</h1>
         </div>
         <div className="row">

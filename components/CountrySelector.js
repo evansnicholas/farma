@@ -34,13 +34,13 @@ class CountrySelector extends React.Component {
     return (
       <div>
         <div className="row">
-          <div className="col-xs-12">
-            <Link to={`/packageSelection/${packageTypes.BASIC}`}>
-              <p className="next text-center">Get products
+          <Link to={`/packageSelection/${packageTypes.BASIC}`}>
+            <div className="col-xs-4 col-xs-offset-4 next">
+              <p className="text-center">{"Get products"}
                 <span className="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
               </p>
-            </Link>
-          </div>
+            </div>
+          </Link>
         </div>
         <div className="row">
           <div className="col-xs-12">

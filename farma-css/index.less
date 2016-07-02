@@ -14,9 +14,31 @@
 
 .next {
   padding-top: 10px;
-  padding-bottom: 10px;
+  margin-bottom: 10px;
+  background-color: #337ab7;
+  color: white;
   border-bottom-style: solid;
   border-bottom-width: thin;
+  border-bottom-color: white;
+}
+
+.next:hover {
+  background-color: white;
+  color: #337ab7;
+  border-bottom-style: solid;
+  border-bottom-width: thin;
+  border-bottom-color: #337ab7;
+  cursor: pointer
+}
+
+.next > a {
+  color: inherit;
+  background-color: inherit;
+}
+
+.next > a:hover {
+  text-decoration: none;
+  color: inherit;
 }
 
 #select-text {
@@ -27,21 +49,23 @@
   margin-left: 10px;
 }
 
-.selected-country:hover {
-  background-color: #ff6666;
-}
-
 .country-details-form > div.country-details {
   margin-right: 0px;
   margin-left: 0px;
 }
 
-.selected-country > p {
+.selected-country-name {
   margin-bottom: 5px;
 }
 
 .selected-country {
   padding: 5px;
+}
+
+.select-country > .row {
+  margin-left: 0px;
+  margin-right: 0px;
+
 }
 
 input.country-detail {
@@ -80,9 +104,10 @@ input.country-detail {
 
 .selected-package {
   border-style: solid;
-  border-bottom-style: none;
   border-width: thin;
   border-color: lightgray;
+  border-bottom: 0;
+
 }
 
 .package-info {

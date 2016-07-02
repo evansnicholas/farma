@@ -4,17 +4,21 @@ var ExtractTextPlugin = require("extract-text-webpack-plugin");
 
 module.exports = {
   entry: [
-    './index'
+    './index',
+    './farma-css/index.less'
   ],
   output: {
     path: path.join(__dirname, 'public'),
     filename: 'bundle.js'
   },
   plugins: [
+    new webpack.DefinePlugin({
+      'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV || 'production')
+    }),
     new webpack.optimize.OccurenceOrderPlugin(),
     new ExtractTextPlugin("style.css", {
-            allChunks: true
-        })
+      allChunks: true
+    })
   ],
   module: {
     loaders: [
@@ -25,7 +29,7 @@ module.exports = {
         include: __dirname
       },
       {
-        test: /\Map.js$/,
+        test: /Map\.js$/,
         loader: "imports?google=>window.google"
       },
       {
