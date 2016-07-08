@@ -1,8 +1,11 @@
 import React from "react";
-import SelectedProduct from "./SelectedProduct";
 import * as packageTypes from "../constants/PackageTypes";
 import {Link} from "react-router";
-import {findAllRelevantPackageTypes} from "../utils/FarmaUtils";
+import {
+  findAllRelevantPackageTypes,
+  findPackageTotalPrice
+} from "../utils/FarmaUtils";
+import Product from "./Product";
 
 export default class PackageSelector extends React.Component {
   getDisplayName() {
@@ -11,7 +14,7 @@ export default class PackageSelector extends React.Component {
 
   constructor(props) {
     super(props);
-    this.renderPackages = this.renderPackages.bind(this);
+    this.renderProducts = this.renderProducts.bind(this);
     this.getViewedPackage = this.getViewedPackage.bind(this);
     this.getPackageClass = this.getPackageClass.bind(this);
   }
@@ -20,7 +23,7 @@ export default class PackageSelector extends React.Component {
     this.props.fetchPackages(this.props.countries);
   }
 
-  renderPackages() {
+  renderProducts() {
     if (this.props.packages === null) {
       return <p>{"Computing packages"}</p>
     } else {
@@ -29,9 +32,20 @@ export default class PackageSelector extends React.Component {
       const products = relevantPackageTypes.map(pt => {
         return this.props.packages.get(pt);
       }).flatten();
-      return products.map((p, idx) => {
-        return <div key={`product${idx}`}><p>{p.name}</p></div>
+      const totalPrice = findPackageTotalPrice(products);
+      const allProducts = products.map((p, idx) => {
+        const toggleProdVis = this.props.onToggleProductVisibility;
+        return <Product key={`product${idx}`}
+                  product={p}
+                  onToggleProductVisibility={toggleProdVis}/>
       });
+
+      return (
+        <div>
+          <h2>{`Total price: \u20ac ${totalPrice}`}</h2>
+          {allProducts}
+        </div>
+      );
     }
   }
 
@@ -86,7 +100,7 @@ export default class PackageSelector extends React.Component {
             </div>
             <div className="row">
               <div className="col-xs-12 package-info">
-                {this.renderPackages()}
+                {this.renderProducts()}
               </div>
             </div>
           </div>

@@ -30,10 +30,6 @@ export function updateCountryTravelDetails(details) {
   return { type: types.UPDATE_TRAVEL_DETAILS, details: details };
 }
 
-export function updateProductSelectionState(productID) {
- return { type: types.UPDATE_PRODUCT_SELECTION_STATE };
-}
-
 export function updateDeliveryDetails(deliveryDetails) {
   return { type: types.UPDATE_DELIVERY_DETAILS };
 }
@@ -64,15 +60,17 @@ export function fetchPackages(countries) {
     const country = c.country.toLowerCase();
     return firebase.database()
       .ref(`/countries/${country}`)
-      .once("value");
+      .once("value")
+      .then(v => {
+        return Object.assign({}, v.val(), {details: c.details});
+      });
   });
 
   const productsPromise = firebase.database()
-    .ref("/products").once("value");
+    .ref("/products").once("value").then(v => v.val());
 
   return function(dispatch) {
-      return Promise.all([...countryPromises, productsPromise]).then(snapshots => {
-        const values = snapshots.map(s => s.val());
+      return Promise.all([...countryPromises, productsPromise]).then(values => {
         const products = values.pop();
         const packages = computePackages(values, products);
         return dispatch(updatePackages(packages));
@@ -80,4 +78,8 @@ export function fetchPackages(countries) {
         console.log(`Getting packages failed: ${err}`);
       });
   }
+}
+
+export function toggleProductVisibility(prodId) {
+  return { type: types.TOGGLE_PRODUCT_VISIBILITY, prodId }
 }

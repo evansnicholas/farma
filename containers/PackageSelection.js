@@ -1,7 +1,7 @@
 import { connect } from "react-redux";
 import PackageSelector from "../components/PackageSelector";
 import {
-  updateProductSelectionState,
+  toggleProductVisibility,
   fetchPackages
 } from "../actions";
 
@@ -14,8 +14,8 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    onToggleProductSelectionState: (productID) => {
-      dispatch(updateProductSelectionState(productID))
+    onToggleProductVisibility: (productID) => {
+      dispatch(toggleProductVisibility(productID))
     },
     fetchPackages: (countries) => {
       dispatch(fetchPackages(countries))

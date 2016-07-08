@@ -64,6 +64,18 @@ export function app(state = initialState, action) {
     case types.UPDATE_PACKAGES: {
       return Object.assign({}, state, {packages: action.packages})
     }
+    case types.TOGGLE_PRODUCT_VISIBILITY: {
+      const updatedPackages = state.packages.map(products => {
+        return products.map(p => {
+          if (p.id === action.prodId) {
+            return Object.assign({}, p, {showDetails: !p.showDetails});
+          } else {
+            return p;
+          }
+        });
+      });
+      return Object.assign({}, state, {packages: updatedPackages});
+    }
     default: return state;
   }
 }

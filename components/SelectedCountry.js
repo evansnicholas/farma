@@ -48,7 +48,7 @@ const SelectedCountry = ({
           <button type="button" className="close"
             aria-label="Close"
             onClick={() => onRemoveCountry(country.country)}>
-            <span aria-hidden="true">{"\u00d7"}</span>
+            <span aria-hidden="true">{"\u00D7"}</span>
           </button>
         </div>
       </div>
