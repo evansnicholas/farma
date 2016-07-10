@@ -56,8 +56,8 @@
     "raw-loader": "^0.5.1",
     "react-addons-test-utils": "^0.14.7",
     "style-loader": "^0.12.3",
-    "webpack": "^1.9.11",
-    "webpack-dev-middleware": "^1.2.0",
-    "webpack-hot-middleware": "^2.9.1"
+    "webpack": "1.12.2",
+    "webpack-dev-server": "1.12.1",
+    "react-hot-loader": "1.3.0"
   }
 }

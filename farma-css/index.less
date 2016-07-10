@@ -116,16 +116,40 @@ input.country-detail {
   border-color: lightgray;
   border-top-style: none;
   padding-top: 20px;
+  padding-bottom: 20px;
 }
 
 .product {
-  padding-top: 10px;
-  padding-bottom: 10px;
-  border-top-style: solid;
-  border-top-width: thin;
+  margin-top: 5px;
+  border-style: solid;
+  border-width: thin;
   border-color: lightgrey;
 }
 
-.product:hover {
-  cursor: pointer
+
+.product {
+
+  .product-name {
+    padding: 10px;
+
+    p {
+      margin: 0px;
+    }
+  }
+
+  .product-name.product-details-show {
+    background-color: #f5f5f5;
+  }
+
+  .product-details {
+    border-top-style: solid;
+    border-color: lightgrey;
+    border-width: thin;
+    padding: 10px;
+  }
+
+  :hover {
+    cursor: pointer
+  }
+
 }
