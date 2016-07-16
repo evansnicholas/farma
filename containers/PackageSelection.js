@@ -2,7 +2,7 @@ import { connect } from "react-redux";
 import PackageSelector from "../components/PackageSelector";
 import {
   toggleProductVisibility,
-  fetchPackages
+  fetchPackagesAndExtras
 } from "../actions";
 
 const mapStateToProps = (state) => {
@@ -17,8 +17,8 @@ const mapDispatchToProps = (dispatch) => {
     onToggleProductVisibility: (productID) => {
       dispatch(toggleProductVisibility(productID))
     },
-    fetchPackages: (countries) => {
-      dispatch(fetchPackages(countries))
+    fetchPackagesAndExtras: (countries) => {
+      dispatch(fetchPackagesAndExtras(countries))
     }
   }
 }

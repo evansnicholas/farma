@@ -13,6 +13,7 @@ const initializeCountry = (country) => ({
 const initialState = {
   countries: [],
   packages: null,
+  extras: null,
   deliveryDetails: {
     email: null,
     firstName: null,
@@ -61,8 +62,11 @@ export function app(state = initialState, action) {
      });
      return Object.assign({}, state, {countries: updatedCountries});
     }
-    case types.UPDATE_PACKAGES: {
-      return Object.assign({}, state, {packages: action.packages})
+    case types.UPDATE_PACKAGES_AND_EXTRAS: {
+      return Object.assign({}, state,
+        {packages: action.packages},
+        {extras: action.extras}
+      )
     }
     case types.TOGGLE_PRODUCT_VISIBILITY: {
       const updatedPackages = state.packages.map(products => {

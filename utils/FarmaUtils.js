@@ -9,17 +9,23 @@ export function extractCountry(results) {
   return countryResult.formatted_address;
 }
 
+function isExtra(product) {
+  return product.hasOwnProperty(prodDescKeys.EXTRA);
+}
+
 function inferProductPackageType(packageType1, packageType2) {
   return Math.min(packageType1, packageType2);
 }
 
 function getProductPackageType(product) {
-  if (product.hasOwnProperty("basic")) {
+  if (product.hasOwnProperty(prodDescKeys.BASIC)) {
     return packageTypes.BASIC;
-  } else if (product.hasOwnProperty("plus")) {
+  } else if (product.hasOwnProperty(prodDescKeys.PLUS)) {
     return packageTypes.PLUS;
-  } else if (product.hasOwnProperty("excellent")) {
+  } else if (product.hasOwnProperty(prodDescKeys.EXCELLENT)) {
     return packageTypes.EXCELLENT;
+  } else {
+    return null;
   }
 }
 
@@ -70,6 +76,11 @@ function updateSelectedProducts(currProducts,
     const numberChildren = countryDetails.children;
     const existingProdDesc = currProducts.get(newProdId, null);
     const countryPackageType = getProductPackageType(countryProdProps);
+
+    // Ignore all the products for which we can't determine the package type.
+    if (countryPackageType === null) {
+      return currProducts;
+    }
 
     if (existingProdDesc === null) {
       const productDescr = productDescriptions[newProdId];
@@ -137,6 +148,34 @@ export function computePackages(countries, productDescriptions) {
   }, packagesByTypeInit);
 
   return packagesByType;
+}
+
+/**
+ * Computes the extra products that will be offered to the client.
+ */
+export function computeExtras(countries, productDescriptions) {
+  const extras = countries.reduce((acc, country) => {
+    const products = Object.keys(country.products);
+    return products.reduce((innerAcc, prodId) => {
+      const existingProd = innerAcc.get(prodId, null);
+      if (existingProd !== null) {
+        return innerAcc;
+      } else {
+        if (isExtra(country.products[prodId])) {
+          const prodDesc =
+            Object.assign(
+              productDescriptions[prodId],
+              {id: prodId}
+            );
+          return innerAcc.set(prodId, prodDesc);
+        } else {
+          return innerAcc;
+        }
+      }
+    }, acc)
+  }, immutable.Map());
+
+  return extras;
 }
 
 /**

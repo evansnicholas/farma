@@ -17,10 +17,15 @@ export default class PackageSelector extends React.Component {
     this.renderProducts = this.renderProducts.bind(this);
     this.getViewedPackage = this.getViewedPackage.bind(this);
     this.getPackageClass = this.getPackageClass.bind(this);
+    this.selectPackage = this.selectPackage.bind(this);
   }
 
   componentDidMount() {
-    this.props.fetchPackages(this.props.countries);
+    this.props.fetchPackagesAndExtras(this.props.countries);
+  }
+
+  selectPackage() {
+    this.context.router.push("/extrasSelection");
   }
 
   renderProducts() {
@@ -42,8 +47,17 @@ export default class PackageSelector extends React.Component {
 
       return (
         <div>
-          <h2>{`Total price: \u20ac ${totalPrice}`}</h2>
-          {allProducts}
+          <div>
+            <p>
+              <strong className="package-price">{`Package price: \u20ac ${totalPrice}`}</strong>
+              <button className="btn btn-default pull-right"
+                  type="submit"
+                  onClick={() => this.selectPackage()}>{"Select package"}</button>
+            </p>
+          </div>
+          <div>
+            {allProducts}
+          </div>
         </div>
       );
     }
@@ -108,6 +122,10 @@ export default class PackageSelector extends React.Component {
       </div>
     );
   }
+}
+
+PackageSelector.contextTypes = {
+  router: React.PropTypes.object
 }
 
 export default PackageSelector;

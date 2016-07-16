@@ -1,5 +1,5 @@
 import * as types from "../constants/ActionTypes";
-import {extractCountry, computePackages} from "../utils/FarmaUtils";
+import {extractCountry, computePackages, computeExtras} from "../utils/FarmaUtils";
 import firebase from "firebase";
 
 const GOOGLE_API_KEY = "AIzaSyDz-fA7ScCf27wZdfSh6qTpaObP-A9_WTU";
@@ -51,11 +51,11 @@ export function fetchCountry(latLng) {
   }
 }
 
-export function updatePackages(packages) {
-  return { type: types.UPDATE_PACKAGES, packages };
+export function updatePackagesAndExtras(packages, extras) {
+  return { type: types.UPDATE_PACKAGES_AND_EXTRAS, packages, extras };
 }
 
-export function fetchPackages(countries) {
+export function fetchPackagesAndExtras(countries) {
   const countryPromises = countries.map(c => {
     const country = c.country.toLowerCase();
     return firebase.database()
@@ -73,7 +73,8 @@ export function fetchPackages(countries) {
       return Promise.all([...countryPromises, productsPromise]).then(values => {
         const products = values.pop();
         const packages = computePackages(values, products);
-        return dispatch(updatePackages(packages));
+        const extras = computeExtras(values, products);
+        return dispatch(updatePackagesAndExtras(packages, extras));
       }).catch(err => {
         console.log(`Getting packages failed: ${err}`);
       });
