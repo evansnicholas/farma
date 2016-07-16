@@ -1,5 +1,6 @@
 import * as types from "../constants/ActionTypes";
 import * as details from "../constants/TravelDetails";
+import immutable from "immutable";
 
 const initializeCountry = (country) => ({
   country: country,
@@ -14,6 +15,7 @@ const initialState = {
   countries: [],
   packages: null,
   extras: null,
+  selectedExtras: immutable.Set(),
   deliveryDetails: {
     email: null,
     firstName: null,
@@ -27,7 +29,7 @@ const initialState = {
   orderNumber: null
 }
 
-export function app(state = initialState, action) {
+export default function data(state = initialState, action) {
   switch(action.type) {
     case types.ADD_COUNTRY: {
       const newCountry = initializeCountry(action.country);
@@ -66,19 +68,19 @@ export function app(state = initialState, action) {
       return Object.assign({}, state,
         {packages: action.packages},
         {extras: action.extras}
-      )
+      );
     }
-    case types.TOGGLE_PRODUCT_VISIBILITY: {
-      const updatedPackages = state.packages.map(products => {
-        return products.map(p => {
-          if (p.id === action.prodId) {
-            return Object.assign({}, p, {showDetails: !p.showDetails});
-          } else {
-            return p;
-          }
-        });
-      });
-      return Object.assign({}, state, {packages: updatedPackages});
+    case types.TOGGLE_SELECTED_EXTRA: {
+      const prodId = action.prodId;
+      if (state.selectedExtras.includes(prodId)) {
+        return Object.assign({}, state,
+          {selectedExtras: state.selectedExtras.delete(prodId)}
+        );
+      } else {
+        return Object.assign({}, state,
+          {selectedExtras: state.selectedExtras.add(prodId)}
+        );
+      }
     }
     default: return state;
   }

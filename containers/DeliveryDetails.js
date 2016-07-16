@@ -3,7 +3,7 @@ import DeliveryDetailsForm from "../components/DeliveryDetailsForm";
 import { updateDeliveryDetails } from "../actions";
 
 const mapStateToProps = (state) => {
-  return state.deliveryDetails;
+  return state.data.deliveryDetails;
 }
 
 const mapDispatchToProps = (dispatch) => {

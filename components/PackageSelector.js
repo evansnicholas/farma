@@ -40,8 +40,11 @@ export default class PackageSelector extends React.Component {
       const totalPrice = findPackageTotalPrice(products);
       const allProducts = products.map((p, idx) => {
         const toggleProdVis = this.props.onToggleProductVisibility;
+        const showProdDetails =
+          this.props.showProductDetails.includes(p.id);
         return <Product key={`product${idx}`}
                   product={p}
+                  showProductDetails={showProdDetails}
                   onToggleProductVisibility={toggleProdVis}/>
       });
 

@@ -7,7 +7,7 @@ import {
 } from "../actions";
 
 const mapStateToProps = (state) => {
-  return { countries: state.countries };
+  return { countries: state.data.countries };
 }
 
 const mapDispatchToProps = (dispatch) => {

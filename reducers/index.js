@@ -1,8 +1,10 @@
-import { combineReducers } from 'redux'
-import {app} from './farma'
+import { combineReducers } from "redux";
+import data from "./data";
+import ui from "./ui";
 
-// const rootReducer = combineReducers({
-//   countries: countries
-// })
+const appReducer = combineReducers({
+  data: data,
+  ui: ui
+})
 
-export default countries;
+export default appReducer;

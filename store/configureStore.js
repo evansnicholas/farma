@@ -1,10 +1,10 @@
 import { createStore, applyMiddleware } from "redux";
-import {app} from "../reducers/farma";
+import appReducer from "../reducers";
 import thunkMiddleware from "redux-thunk";
 
 export default function configureStore(initialState = {}) {
   const store = createStore(
-    app,
+    appReducer,
     applyMiddleware(
       thunkMiddleware
     )

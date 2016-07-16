@@ -82,5 +82,9 @@ export function fetchPackagesAndExtras(countries) {
 }
 
 export function toggleProductVisibility(prodId) {
-  return { type: types.TOGGLE_PRODUCT_VISIBILITY, prodId }
+  return { type: types.TOGGLE_PRODUCT_VISIBILITY, prodId };
+}
+
+export function toggleSelectedExtra(prodId) {
+  return { type: types.TOGGLE_SELECTED_EXTRA, prodId };
 }

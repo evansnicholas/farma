@@ -2,7 +2,9 @@ import { connect } from "react-redux";
 import OrderSummarizor from "../components/OrderSummarizor";
 
 const mapStateToProps = (state) => {
-  return state.products;
+  return {
+    products: state.data.products
+  };
 }
 
 const OrderSummary = connect(

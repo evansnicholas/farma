@@ -4,7 +4,6 @@ import { render } from "react-dom";
 import { Provider } from "react-redux";
 import App from "./components/App";
 import CountrySelection from "./containers/CountrySelection";
-import TravelDetails from "./containers/TravelDetails";
 import PackageSelection from "./containers/PackageSelection";
 import OrderSummary from "./containers/OrderSummary";
 import DeliveryDetails from "./containers/DeliveryDetails";
@@ -13,7 +12,6 @@ import ExtrasSelection from "./containers/ExtrasSelection";
 import configureStore from "./store/configureStore";
 import { Router, Route, browserHistory, IndexRedirect } from "react-router";
 import "./index.html";
-//import "./assets/bootstrap-3.3.6-dist/css/bootstrap.css";
 
 const store = configureStore()
 
@@ -23,7 +21,6 @@ render(
       <Route path="/" component={App} >
         <IndexRedirect to="/countrySelection" />
         <Route path="countrySelection" component={CountrySelection} />
-        <Route path="travelDetails" component={TravelDetails} />
         <Route path="packageSelection/:packageType" component={PackageSelection} />
         <Route path="extrasSelection" component={ExtrasSelection} />
         <Route path="orderSummary" component={OrderSummary} />

@@ -63,10 +63,6 @@ function computeProductTotalPrice(currTotalPrice, prodDesc, numberAdults, number
   return currTotalPrice + (prodQuantity * prodPrice);
 }
 
-const initialProductFields = {
-  showDetails: false
-}
-
 function updateSelectedProducts(currProducts,
   productDescriptions,
   newProdId,
@@ -88,7 +84,6 @@ function updateSelectedProducts(currProducts,
         computeProductTotalPrice(0, productDescr, numberAdults, numberChildren);
       const updatedDesc =
         Object.assign({}, productDescr,
-          initialProductFields,
           {id: newProdId},
           {packageType: countryPackageType},
           {totalPrice: productTotalPrice}

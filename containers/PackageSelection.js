@@ -7,8 +7,9 @@ import {
 
 const mapStateToProps = (state) => {
   return {
-    packages: state.packages,
-    countries: state.countries
+    packages: state.data.packages,
+    countries: state.data.countries,
+    showProductDetails: state.ui.showProductDetails
   };
 }
 
