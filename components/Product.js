@@ -1,4 +1,5 @@
 import React from "react";
+import * as prodDescKeys from "../constants/ProductDescriptionKeys";
 
 function createSelectButton(toggleSelectedProduct, prodId, isSelected) {
   if (toggleSelectedProduct !== null) {
@@ -22,6 +23,61 @@ function createPriceParagraph(price, showPrice) {
   } else {
     return null;
   }
+}
+
+function renderDosage(dosage) {
+  if (typeof dosage === "undefined") {
+    return null;
+  }
+
+  return Object.entries(dosage).map(([sitKey, sitValue], idx) => {
+    const sitDispName = prodDescKeys.getSituationDisplayName(sitKey);
+    if (sitDispName !== null) {
+      const targetGroups =
+        Object.entries(sitValue).map(([targetKey, targetValue], innerIdx) => {
+          const targetDisplayName = prodDescKeys.getTargetGroupDisplayName(targetKey);
+          if (targetDisplayName !== null) {
+            return <p key={innerIdx}><em>{`${targetDisplayName}: `}</em>{targetValue}</p>;
+          } else {
+            return null;
+          }
+        });
+      return (
+        <div key={idx}>
+          <p><strong>{sitDispName}</strong></p>
+          {targetGroups}
+        </div>
+      );
+    } else {
+      return null;
+    }
+  });
+}
+
+function createProductDetails(prodDesc) {
+  const dosageDetails = renderDosage(prodDesc.dosage);
+  let dosageInfo = null;
+
+  if (dosageDetails !== null) {
+    dosageInfo = (
+      <div>
+        <p><strong>{"Dosage Info"}</strong></p>
+        {dosageDetails}
+      </div>
+    )
+  }
+
+  return (
+    <div>
+      <dl>
+        <dt>{"Advise"}</dt>
+        <dd>{prodDesc.advice}</dd>
+        <dt>{"Producent"}</dt>
+        <dd>{prodDesc.producer}</dd>
+      </dl>
+      {dosageInfo}
+    </div>
+  );
 }
 
 const Product = ({
@@ -49,7 +105,7 @@ const Product = ({
         <p>{product.name}</p>
       </div>
       <div className={`product-details ${prodDetailsClass}`}>
-        <p><strong>{"Description: "}</strong>{"This is a product description"}</p>
+        {createProductDetails(product)}
       </div>
     </div>
   );
