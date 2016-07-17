@@ -1,4 +1,5 @@
 import * as types from "../constants/ActionTypes";
+import * as orderStates from "../constants/OrderStates";
 import {extractCountry, computePackages, computeExtras} from "../utils/FarmaUtils";
 import firebase from "firebase";
 
@@ -30,8 +31,20 @@ export function updateCountryTravelDetails(details) {
   return { type: types.UPDATE_TRAVEL_DETAILS, details: details };
 }
 
-export function updateDeliveryDetails(deliveryDetails) {
-  return { type: types.UPDATE_DELIVERY_DETAILS };
+export function updateOrder(orderDetails) {
+  return { type: types.UPDATE_ORDER, orderDetails };
+}
+
+export function toggleProductVisibility(prodId) {
+  return { type: types.TOGGLE_PRODUCT_VISIBILITY, prodId };
+}
+
+export function toggleSelectedExtra(prodId) {
+  return { type: types.TOGGLE_SELECTED_EXTRA, prodId };
+}
+
+export function selectPackage(packageType) {
+  return {type: types.SELECT_PACKAGE, packageType };
 }
 
 export function fetchCountry(latLng) {
@@ -74,17 +87,33 @@ export function fetchPackagesAndExtras(countries) {
         const products = values.pop();
         const packages = computePackages(values, products);
         const extras = computeExtras(values, products);
-        return dispatch(updatePackagesAndExtras(packages, extras));
+        dispatch(updatePackagesAndExtras(packages, extras));
       }).catch(err => {
         console.log(`Getting packages failed: ${err}`);
       });
   }
 }
 
-export function toggleProductVisibility(prodId) {
-  return { type: types.TOGGLE_PRODUCT_VISIBILITY, prodId };
-}
+export function sendOrder(order) {
 
-export function toggleSelectedExtra(prodId) {
-  return { type: types.TOGGLE_SELECTED_EXTRA, prodId };
+  return function(dispatch) {
+    dispatch(updateOrder({orderStatus: orderStates.PROCESSING}));
+    const newOrderKey = firebase.database().ref("/orders").push().key;
+    return (
+      firebase.database().ref(`/orders/${newOrderKey}`)
+        .set(order)
+        .then(() => {
+          dispatch(updateOrder({
+            orderStatus: orderStates.ORDER_SUCCESSFUL,
+            orderKey: newOrderKey
+          }))
+        })
+        .catch((err) => {
+          console.error(err);
+          dispatch(updateOrder({
+            orderStatus: orderStates.ORDER_FAILED
+          }))
+        })
+      );
+  }
 }

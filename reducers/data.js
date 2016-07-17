@@ -16,17 +16,7 @@ const initialState = {
   packages: null,
   extras: null,
   selectedExtras: immutable.Set(),
-  deliveryDetails: {
-    email: null,
-    firstName: null,
-    lastName: null,
-    streetName: null,
-    houseNumber: null,
-    houseNumberExtension: null,
-    city: null,
-    postcode: null
-  },
-  orderNumber: null
+  selectedPackage: null
 }
 
 export default function data(state = initialState, action) {
@@ -81,6 +71,11 @@ export default function data(state = initialState, action) {
           {selectedExtras: state.selectedExtras.add(prodId)}
         );
       }
+    }
+    case types.SELECT_PACKAGE: {
+      return Object.assign({}, state,
+        {selectedPackage: action.packageType}
+      );
     }
     default: return state;
   }

@@ -16,9 +16,18 @@ function createSelectButton(toggleSelectedProduct, prodId, isSelected) {
    }
 }
 
+function createPriceParagraph(price, showPrice) {
+  if (showPrice) {
+    return <p className="pull-right">{`\u20ac ${price}`}</p>;
+  } else {
+    return null;
+  }
+}
+
 const Product = ({
   product,
   showProductDetails,
+  showPrice,
   onToggleProductVisibility,
   onToggleSelectedProduct,
   isSelected
@@ -28,6 +37,7 @@ const Product = ({
   const triangleDirection = (showProductDetails) ? "left" : "bottom";
   const selectProductButton = createSelectButton(onToggleSelectedProduct, product.id, isSelected);
   const selectedClass = (isSelected) ? "bg-success" : "product-not-selected";
+  const priceP = createPriceParagraph(product.price, showPrice);
 
   return (
     <div className="product">
@@ -35,6 +45,7 @@ const Product = ({
         onClick={() => onToggleProductVisibility(product.id)}>
         <span className={`pull-right glyphicon glyphicon-triangle-${triangleDirection}`} aria-hidden="true"></span>
         {selectProductButton}
+        {priceP}
         <p>{product.name}</p>
       </div>
       <div className={`product-details ${prodDetailsClass}`}>
@@ -45,7 +56,8 @@ const Product = ({
 }
 
 Product.defaultProps = {
-  onToggleSelectedProduct: null
+  onToggleSelectedProduct: null,
+  showPrice: false
 }
 
 export default Product;

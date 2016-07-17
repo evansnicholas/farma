@@ -2,8 +2,8 @@ import React from "react";
 import * as packageTypes from "../constants/PackageTypes";
 import {Link} from "react-router";
 import {
-  findAllRelevantPackageTypes,
-  findPackageTotalPrice
+  findTotalProductsPrice,
+  findAllProductsInPackage
 } from "../utils/FarmaUtils";
 import Product from "./Product";
 
@@ -18,13 +18,30 @@ export default class PackageSelector extends React.Component {
     this.getViewedPackage = this.getViewedPackage.bind(this);
     this.getPackageClass = this.getPackageClass.bind(this);
     this.selectPackage = this.selectPackage.bind(this);
+    this.navigateToCountrySelection = this.navigateToCountrySelection.bind(this);
   }
 
   componentDidMount() {
     this.props.fetchPackagesAndExtras(this.props.countries);
   }
 
+  navigateToCountrySelection() {
+    this.context.router.push("/countrySelection");
+  }
+
+  getViewedPackage() {
+    return Number(this.props.routeParams.packageType);
+  }
+
+  getPackageClass(packageType) {
+    return (
+      (this.getViewedPackage() === packageType) ?
+        "selected-package" : "package"
+    );
+  }
+
   selectPackage() {
+    this.props.onSelectPackage(this.getViewedPackage());
     this.context.router.push("/extrasSelection");
   }
 
@@ -32,12 +49,11 @@ export default class PackageSelector extends React.Component {
     if (this.props.packages === null) {
       return <p>{"Computing packages"}</p>
     } else {
-      const relevantPackageTypes =
-        findAllRelevantPackageTypes(this.getViewedPackage());
-      const products = relevantPackageTypes.map(pt => {
-        return this.props.packages.get(pt);
-      }).flatten();
-      const totalPrice = findPackageTotalPrice(products);
+      const products = findAllProductsInPackage(
+        this.getViewedPackage(),
+        this.props.packages
+      );
+      const totalPrice = findTotalProductsPrice(products);
       const allProducts = products.map((p, idx) => {
         const toggleProdVis = this.props.onToggleProductVisibility;
         const showProdDetails =
@@ -66,32 +82,21 @@ export default class PackageSelector extends React.Component {
     }
   }
 
-  getViewedPackage() {
-    return Number(this.props.routeParams.packageType);
-  }
-
-  getPackageClass(packageType) {
-    return (
-      (this.getViewedPackage() === packageType) ?
-        "selected-package" : "package"
-    );
-  }
-
   render() {
     const basicClass = this.getPackageClass(packageTypes.BASIC);
     const plusClass = this.getPackageClass(packageTypes.PLUS);
     const excellentClass = this.getPackageClass(packageTypes.EXCELLENT);
     return (
       <div className="container" id="packages-choice">
-        <div className="row">
-          <Link to={`/countrySelection`}>
-            <div className="col-xs-2 next">
-              <p className="text-left">
-                <span className="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
-                {"Adjust Countries"}
-              </p>
-            </div>
-          </Link>
+        <div className="row farma-nav">
+          <button className={`btn btn-default pull-left`}
+            type="submit"
+            onClick={() => {
+              this.navigateToCountrySelection()
+            }}>
+              <span className="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+              {"Country Selection"}
+          </button>
         </div>
         <div className="row">
           <h1>{"Choose your package:"}</h1>
@@ -101,17 +106,17 @@ export default class PackageSelector extends React.Component {
             <div id="package-tabs" className="row">
               <Link to={`/packageSelection/${packageTypes.BASIC}`}>
                 <div className={`col-xs-4 ${basicClass}`}>
-                  <h2>{"Basic"}</h2>
+                  <h2>{packageTypes.BASIC_DISPLAY_NAME}</h2>
                 </div>
               </Link>
               <Link to={`/packageSelection/${packageTypes.PLUS}`}>
                 <div className={`col-xs-4 ${plusClass}`}>
-                  <h2>{"Extra"}</h2>
+                  <h2>{packageTypes.PLUS_DISPLAY_NAME}</h2>
                 </div>
               </Link>
               <Link to={`/packageSelection/${packageTypes.EXCELLENT}`}>
                 <div className={`col-xs-4 ${excellentClass}`}>
-                  <h2>{"VIP"}</h2>
+                  <h2>{packageTypes.EXCELLENT_DISPLAY_NAME}</h2>
                 </div>
               </Link>
             </div>

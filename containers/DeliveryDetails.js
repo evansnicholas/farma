@@ -1,15 +1,18 @@
 import { connect } from "react-redux";
 import DeliveryDetailsForm from "../components/DeliveryDetailsForm";
-import { updateDeliveryDetails } from "../actions";
+import { updateOrder, sendOrder } from "../actions";
 
 const mapStateToProps = (state) => {
-  return state.data.deliveryDetails;
+  return { order: state.order };
 }
 
 const mapDispatchToProps = (dispatch) => {
   return {
     onUpdateDeliveryDetails: (deliveryDetails) => {
-      dispatch(updateDeliveryDetails(deliveryDetails))
+      dispatch(updateOrder(deliveryDetails))
+    },
+    onSubmitOrder: (order) => {
+      dispatch(sendOrder(order))
     }
   }
 }

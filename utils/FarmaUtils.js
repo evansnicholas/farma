@@ -157,10 +157,12 @@ export function computeExtras(countries, productDescriptions) {
         return innerAcc;
       } else {
         if (isExtra(country.products[prodId])) {
+          const rawProdDesc = productDescriptions[prodId];
           const prodDesc =
             Object.assign(
-              productDescriptions[prodId],
-              {id: prodId}
+              rawProdDesc,
+              {id: prodId},
+              {totalPrice: rawProdDesc.price}
             );
           return innerAcc.set(prodId, prodDesc);
         } else {
@@ -174,10 +176,28 @@ export function computeExtras(countries, productDescriptions) {
 }
 
 /**
+ * Given a packageType and the computed packages finds all the products
+ * in a given package (this is a union of the products in the package itself
+ * and in all the lesser packages).
+ * @param {int} packageType - The package type.
+ * @param {object} packages - The package definitions.
+ * @return {array} - All the products in the package.
+ */
+export function findAllProductsInPackage(packageType, packages) {
+  const relevantPackageTypes =
+    findAllRelevantPackageTypes(packageType);
+  const products = relevantPackageTypes.map(pt => {
+    return packages.get(pt);
+  }).flatten();
+
+  return products;
+}
+
+/**
  * Finds all packages that are less than or equal to a given package type.
  * For instance, if the selected package type is PLUS, then the relevant
  * packages are BASIC and PLUS.
- * @param {string} packageType - The package type.
+ * @param {int} packageType - The package type.
  * @return {object} - An immutable.List of the relevant package types.
  */
 export function findAllRelevantPackageTypes(packageType) {
@@ -188,13 +208,21 @@ export function findAllRelevantPackageTypes(packageType) {
   );
 }
 
+export function findAllExtraProductDescriptions(
+  selectedExtras,
+  productDescriptions) {
+  return selectedExtras.valueSeq().map(extra =>
+    productDescriptions.get(extra)
+  );
+}
+
 /**
- * Given a list of products in a package, returns the total price
- * of the package.
+ * Given a list of products, returns the total price
+ * of all the products.
  * @param {array} products - The products in the package
  * @returns {int} - The rounded price of the package
  */
-export function findPackageTotalPrice(products) {
+export function findTotalProductsPrice(products) {
   const rawTotal = products.reduce((acc, prod) => {
     return (acc + prod.totalPrice);
   }, 0);
